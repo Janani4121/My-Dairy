@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Secret Diary</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #fce4ec;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Extra Butterflies & Flowers Decorations */
+        .deco { position: absolute; z-index: 1; opacity: 0.8; animation: float 6s infinite ease-in-out; pointer-events: none; }
+        @keyframes float { 
+            0%, 100% { transform: translateY(0) rotate(0deg); } 
+            50% { transform: translateY(-20px) rotate(15deg); } 
+        }
+        
+        /* Butterflies 🦋 */
+        .b1 { top: 5%; left: 5%; font-size: 40px; }
+        .b2 { top: 15%; right: 10%; font-size: 35px; animation-delay: 2s; }
+        .b3 { bottom: 10%; left: 8%; font-size: 45px; animation-delay: 1s; }
+        .b4 { bottom: 5%; right: 5%; font-size: 50px; animation-delay: 3.5s; }
+        .b5 { top: 50%; left: 3%; font-size: 30px; animation-delay: 4s; }
+        .b6 { top: 40%; right: 4%; font-size: 38px; animation-delay: 1.5s; }
+
+        /* Flowers 🌸 */
+        .f1 { top: 20%; left: 15%; font-size: 25px; opacity: 0.6; }
+        .f2 { bottom: 25%; right: 15%; font-size: 30px; opacity: 0.6; }
+        .f3 { top: 80%; left: 20%; font-size: 28px; opacity: 0.6; }
+        .f4 { top: 10%; right: 25%; font-size: 22px; opacity: 0.6; }
+
+        /* Slim & Tall Diary Card */
+        .diary-card {
+            background-color: white;
+            width: 400px;
+            height: 90vh;
+            border-radius: 25px;
+            padding: 25px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            border: 12px solid #f8bbd0;
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1 { font-family: 'Dancing Script', cursive; color: #880e4f; text-align: center; margin: 0 0 10px 0; font-size: 2.3rem; }
+
+        .info-bar {
+            display: flex;
+            justify-content: space-between;
+            background: #fff0f6;
+            padding: 8px 15px;
+            border-radius: 12px;
+            border: 1px dashed #ec407a;
+            margin-bottom: 12px;
+        }
+
+        .info-bar input, .info-bar select {
+            border: none; background: transparent; color: #ad1457; font-weight: bold; outline: none; font-size: 13px;
+        }
+
+        /* Compact Note Lines */
+        .writing-area {
+            flex: 1;
+            width: 100%;
+            background-image: linear-gradient(#e1bee7 1px, transparent 1px);
+            background-size: 100% 28px; 
+            line-height: 28px;
+            border: none;
+            outline: none;
+            resize: none;
+            font-size: 16px; 
+            color: #333;
+            padding-top: 5px;
+            background-attachment: local;
+            overflow-y: hidden;
+        }
+
+        .bottom-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 1px solid #fce4ec;
+        }
+
+        .btn {
+            background: #ec407a;
+            color: white;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 12px;
+            transition: 0.3s;
+        }
+
+        .btn-save { background: #d81b60; padding: 5px 15px; font-size: 11px; }
+        .btn-clear { background: #f48fb1; }
+        .btn:hover { background: #ad1457; transform: translateY(-2px); }
+
+        .page-num { font-weight: bold; color: #880e4f; font-size: 12px; background: #fce4ec; padding: 4px 12px; border-radius: 8px; }
+    </style>
+</head>
+<body>
+
+    <div class="deco b1">🦋</div><div class="deco b2">🦋</div>
+    <div class="deco b3">🦋</div><div class="deco b4">🦋</div>
+    <div class="deco b5">🦋</div><div class="deco b6">🦋</div>
+
+    <div class="deco f1">🌸</div><div class="deco f2">🌺</div>
+    <div class="deco f3">🌼</div><div class="deco f4">🌷</div>
+
+    <div class="diary-card">
+        <h1>My Daily Memories</h1>
+
+        <div class="info-bar">
+            <div>📅 <input type="date" id="dateInp"></div>
+            <div>🌈 
+                <select id="dayInp">
+                    <option>Monday</option><option>Tuesday</option><option>Wednesday</option>
+                    <option>Thursday</option><option>Friday</option><option>Saturday</option><option>Sunday</option>
+                </select>
+            </div>
+        </div>
+
+        <textarea id="noteTxt" class="writing-area" placeholder="Write your memory baby..."></textarea>
+
+        <div class="bottom-controls">
+            <button class="btn" onclick="turnPage(-1)">⬅ Prev</button>
+            
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
+                <div class="page-num">Page <span id="pDisplay">1</span></div>
+                <button class="btn btn-save" onclick="saveMem()">Save ✨</button>
+            </div>
+
+            <div style="display: flex; gap: 10px;">
+                <button class="btn btn-clear" onclick="clearMem()">🗑 Clear</button>
+                <button class="btn" onclick="turnPage(1)">Next ➡</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let p = 1;
+        window.onload = () => {
+            document.getElementById('dateInp').valueAsDate = new Date();
+            load(1);
+        };
+
+        function saveMem() {
+            const text = document.getElementById('noteTxt').value;
+            if(text.trim() === "") {
+                alert("Please write something first!");
+                return;
+            }
+            const data = {
+                t: text,
+                d: document.getElementById('dateInp').value,
+                dy: document.getElementById('dayInp').value
+            };
+            localStorage.setItem('diary_page_' + p, JSON.stringify(data));
+            alert("Memory Locked! 🔒❤️");
+        }
+
+        function turnPage(step) {
+            p += step;
+            if (p < 1) p = 1;
+            document.getElementById('pDisplay').innerText = p;
+            load(p);
+        }
+
+        function load(page) {
+            const saved = localStorage.getItem('diary_page_' + page);
+            if (saved) {
+                const data = JSON.parse(saved);
+                document.getElementById('noteTxt').value = data.t;
+                document.getElementById('dateInp').value = data.d;
+                document.getElementById('dayInp').value = data.dy;
+            } else {
+                document.getElementById('noteTxt').value = "";
+                document.getElementById('dateInp').valueAsDate = new Date();
+            }
+        }
+
+        function clearMem() {
+            if(confirm("Are you sure you want to erase this memory? 🗑️")) {
+                document.getElementById('noteTxt').value = "";
+                localStorage.removeItem('diary_page_' + p);
+                alert("Memory Erased! ✨");
+            }
+        }
+    </script>
+</body>
+</html>
